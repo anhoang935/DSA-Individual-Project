@@ -9,7 +9,10 @@ const calendar = document.querySelector(".calendar"),
     eventDay = document.querySelector(".event-day"),
     eventDate = document.querySelector(".event-date"),
     eventsContainer = document.querySelector(".events"),
-    addEventSubmit = document.querySelector(".add-event-btn");
+    addEventSubmit = document.querySelector(".add-event-btn"),
+    manageList = document.querySelector(".manage-list"),
+    returnBtn = document.querySelector(".return-btn"),
+    filterBtn = document.querySelector(".filter-btn");
 
 let today = new Date();
 let activeDay;
@@ -186,7 +189,13 @@ const addEventBtn = document.querySelector(".add-event"),
     addEventTitle = document.querySelector(".event-name"),
     addEventFrom = document.querySelector(".event-time-from"),
     addEventTo = document.querySelector(".event-time-to");
+    
 
+manageList.addEventListener("click", () => {
+    returnBtn.classList.toggle("show");
+    filterBtn.classList.toggle("show");
+    manageList.classList.toggle("active");
+});
 addEventBtn.addEventListener("click", () => {
     addEventContainer.classList.toggle("active");
 });
@@ -415,6 +424,8 @@ eventsContainer.addEventListener("click", (e) => {
         updateEvents(activeDay);
     }
 });
+
+
 
 function saveEvents() {
     localStorage.setItem("events", JSON.stringify(eventsArr));
