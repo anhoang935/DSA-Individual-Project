@@ -11,8 +11,13 @@ const calendar = document.querySelector(".calendar"),
     eventsContainer = document.querySelector(".events"),
     addEventSubmit = document.querySelector(".add-event-btn"),
     manageList = document.querySelector(".manage-list"),
-    returnBtn = document.querySelector(".return-btn"),
-    filterBtn = document.querySelector(".filter-btn");
+    filterBtn = document.querySelector(".filter-btn"),
+    sortBtn = document.querySelector(".sort-btn"),
+    searchBar = document.querySelector(".search-bar"),
+    filterContainer = document.querySelector(".filter-event-wrapper"),
+    sortContainer = document.querySelector(".sort-event-wrapper"),
+    ascendingBtn = document.querySelector(".ascending-btn"),
+    descendingBtn = document.querySelector(".descending-btn");
 
 let today = new Date();
 let activeDay;
@@ -192,19 +197,41 @@ const addEventBtn = document.querySelector(".add-event"),
     
 
 manageList.addEventListener("click", () => {
-    returnBtn.classList.toggle("show");
     filterBtn.classList.toggle("show");
     manageList.classList.toggle("active");
+    sortBtn.classList.toggle("show");
+    searchBar.classList.toggle("show");
+    addEventBtn.classList.toggle("active");
 });
+
+filterBtn.addEventListener("click", () => {
+    filterContainer.classList.toggle("active");
+    filterBtn.classList.toggle("active");
+});
+
+sortBtn.addEventListener("click", () => {
+    sortContainer.classList.toggle("active");
+    sortBtn.classList.toggle("active");
+})
+
 addEventBtn.addEventListener("click", () => {
     addEventContainer.classList.toggle("active");
 });
 addEventCloseBtn.addEventListener("click", () => {
     addEventContainer.classList.remove("active");
 });
+
 document.addEventListener("click", (e) => {
     if(e.target !== addEventBtn && !addEventContainer.contains(e.target)){
         addEventContainer.classList.remove("active");
+    }
+    if(e.target !== sortBtn && !sortContainer.contains(e.target)){
+        sortContainer.classList.remove("active");
+        sortBtn.classList.remove("active");
+    }
+    if(e.target !== filterBtn && !filterContainer.contains(e.target)){
+        filterContainer.classList.remove("active");
+        filterBtn.classList.remove("active");
     }
 });
 
@@ -425,7 +452,125 @@ eventsContainer.addEventListener("click", (e) => {
     }
 });
 
+function mergeSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
 
+    const mid = Math.floor(arr.length / 2);
+    const left = arr.slice(0, mid);
+    const right = arr.slice(mid);
+
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge(left, right) {
+    let result = [];
+    let leftIndex = 0;
+    let rightIndex = 0;
+
+    while (leftIndex < left.length && rightIndex < right.length) {
+        const leftDate = new Date(left[leftIndex].year, left[leftIndex].month - 1, left[leftIndex].day);
+        const rightDate = new Date(right[rightIndex].year, right[rightIndex].month - 1, right[rightIndex].day);
+
+        if (leftDate <= rightDate) {
+            result.push(left[leftIndex]);
+            leftIndex++;
+        } else {
+            result.push(right[rightIndex]);
+            rightIndex++;
+        }
+    }
+
+    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+}
+
+ascendingBtn.addEventListener("click", () => {
+    eventsArr = mergeSort(eventsArr); // Sort in ascending order
+    let events = "";
+    eventsArr.forEach((event) => {
+            event.events.forEach((event) => {
+                events += `<div class="event">
+                <div class="title">
+                  <i class="fas fa-circle"></i>
+                  <h3 class="event-title">${event.title}</h3>
+                </div>
+                <div class="event-time">
+                  <span class="event-time">${event.time}</span>
+                </div>
+            </div>`;
+            });
+    });
+
+    if((events === "")){
+        events = `<div class="no-event">
+                    <h3>No Events</h3>
+                </div>`;
+    }
+
+    eventsContainer.innerHTML = events;
+});
+
+// Inverse Merge Sort for descending order
+function inverseMergeSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
+
+    const mid = Math.floor(arr.length / 2);
+    const left = arr.slice(0, mid);
+    const right = arr.slice(mid);
+
+    return inverseMerge(inverseMergeSort(left), inverseMergeSort(right));
+}
+
+// Merge function for descending order
+function inverseMerge(left, right) {
+    let result = [];
+    let leftIndex = 0;
+    let rightIndex = 0;
+
+    while (leftIndex < left.length && rightIndex < right.length) {
+        const leftDate = new Date(left[leftIndex].year, left[leftIndex].month - 1, left[leftIndex].day);
+        const rightDate = new Date(right[rightIndex].year, right[rightIndex].month - 1, right[rightIndex].day);
+
+        if (leftDate >= rightDate) {
+            result.push(left[leftIndex]);
+            leftIndex++;
+        } else {
+            result.push(right[rightIndex]);
+            rightIndex++;
+        }
+    }
+
+    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+}
+
+descendingBtn.addEventListener("click", () => {
+    eventsArr = inverseMergeSort(eventsArr);
+    let events = "";
+    eventsArr.forEach((event) => {
+            event.events.forEach((event) => {
+                events += `<div class="event">
+                <div class="title">
+                  <i class="fas fa-circle"></i>
+                  <h3 class="event-title">${event.title}</h3>
+                </div>
+                <div class="event-time">
+                  <span class="event-time">${event.time}</span>
+                </div>
+            </div>`;
+            });
+    });
+
+    if((events === "")){
+        events = `<div class="no-event">
+                    <h3>No Events</h3>
+                </div>`;
+    }
+
+    eventsContainer.innerHTML = events;
+});
 
 function saveEvents() {
     localStorage.setItem("events", JSON.stringify(eventsArr));
