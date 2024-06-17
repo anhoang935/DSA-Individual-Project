@@ -10,8 +10,70 @@
 
 </head>
 <body>
-    
+    <div class="overlay"></div>
     <div class="container">
+        <div class="help-wrapper">
+            <div class="help-title">How to Use?</div>
+        <div class="help-content">
+            <p>Welcome to my calendar and to-do-list application. Let me guide you through its features:</p>
+            
+            <h3>Calendar (Left Side)</h3>
+            <ul>
+                <li>Displays the month, year, and navigation arrows to move between months.</li>
+                <li>Select a specific day to mark it as active.</li>
+                <li>Active days with events are indicated differently.</li>
+                <li>Clicking on a day with events shows the events in the to-do-list (right side).</li>
+            </ul>
+            
+            <h3>To-Do-List (Right Side)</h3>
+            <ul>
+                <li>Displays the day of the week, date, month, and year for the active day.</li>
+                <li>Lists events for the selected day. If no events, it displays "No events".</li>
+                <li>Buttons at the bottom include "Manage List" and "Add Event".</li>
+                <li>Adding an event requires filling in event details (title, start time, end time).</li>
+                <li>Once submitted, events appear in the list. Clicking an event marks it as done.</li>
+            </ul>
+            
+            <h3>Managing Event Lists</h3>
+            <ul>
+                <li>Clicking "Manage List" shows all events.</li>
+                <li>Options include filtering (by month or year), sorting (ascending or descending), and searching.</li>
+                <li>Sorting or searching applies only after filtering events.</li>
+                <li>Clicking an event navigates the calendar to its date.</li>
+            </ul>
+            
+            <p>Explore the application and enjoy managing your schedule efficiently!</p>
+            <p>Welcome to my calendar and to-do-list application. Let me guide you through its features:</p>
+            
+            <h3>Calendar (Left Side)</h3>
+            <ul>
+                <li>Displays the month, year, and navigation arrows to move between months.</li>
+                <li>Select a specific day to mark it as active.</li>
+                <li>Active days with events are indicated differently.</li>
+                <li>Clicking on a day with events shows the events in the to-do-list (right side).</li>
+            </ul>
+            
+            <h3>To-Do-List (Right Side)</h3>
+            <ul>
+                <li>Displays the day of the week, date, month, and year for the active day.</li>
+                <li>Lists events for the selected day. If no events, it displays "No events".</li>
+                <li>Buttons at the bottom include "Manage List" and "Add Event".</li>
+                <li>Adding an event requires filling in event details (title, start time, end time).</li>
+                <li>Once submitted, events appear in the list. Clicking an event marks it as done.</li>
+            </ul>
+            
+            <h3>Managing Event Lists</h3>
+            <ul>
+                <li>Clicking "Manage List" shows all events.</li>
+                <li>Options include filtering (by month or year), sorting (ascending or descending), and searching.</li>
+                <li>Sorting or searching applies only after filtering events.</li>
+                <li>Clicking an event navigates the calendar to its date.</li>
+            </ul>
+            
+            <p>Explore the application and enjoy managing your schedule efficiently!</p>
+
+        </div>
+        </div>
         <div class ="left">
             <div class="calendar">
                 <div class="month">
@@ -73,6 +135,12 @@
                 <i class='bx bx-list-ul'> </i>
                 Manage List
             </button>
+            <button class="help-btn">
+                ?
+            </button>
+            <!-- <button class="clear-btn">
+                <i class='bx bx-refresh'></i>
+            </button> -->
             <button class="filter-btn">
                 <i class='bx bxs-filter-alt'></i>
                 Filter
@@ -120,7 +188,7 @@
                 </div> 
             </div>
         </div>
-        <button class="add-event active">
+        <button class="add-event show">
             <i class='bx bx-plus'></i>
         </button>
     </div>

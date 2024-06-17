@@ -423,7 +423,7 @@ body{
 .add-event {
     position: absolute;
     bottom: 30px;
-    right: 30px;
+    right: 34px;
     width: 40px;
     height: 40px;
     display: flex;
@@ -433,23 +433,15 @@ body{
     color: #9797ae;
     border: 2px solid #9797ae;
     opacity: 0;
-    border-radius: 50%;
+    border-radius: 5px;
     background-color: transparent;
     cursor: pointer;
-    border-width: 3px;
     transition: opacity 1s ease;
     pointer-events: none;
-}
-.add-event.active:hover{
-    opacity: 1;
 }
 .add-event i{
     pointer-events: none;
     font-size: 25px;
-}
-.add-event.active{
-    opacity: 0.5;
-    pointer-events: auto;
 }
 .manage-list{
     position: absolute;
@@ -482,6 +474,42 @@ body{
     opacity: 1;
     color: #fff;
     border-color: #fff;
+}
+/* .clear-btn {
+    position: absolute;
+    bottom: 25px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    gap: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    background-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #9797ae;
+    border-radius: 5px;
+    border: 2px solid #9797ae;
+    transition: opacity 1s ease;
+} */
+.help-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+    background-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #9797ae;
+    border-radius: 50%;
+    border: 2px solid #9797ae;
 }
 .filter-btn {
     position: absolute;
@@ -551,18 +579,25 @@ body{
 .search-bar.show{
     opacity: 1;
 }
+.add-event.show,
+/* .clear-btn.show, */
 .filter-btn.show,
 .sort-btn.show{
     pointer-events: auto;
     opacity: 0.5;
 }
+.add-event.show.active,
+.help-btn.active,
 .filter-btn.show.active,
 .sort-btn.show.active{
     opacity: 1;
     color: #fff;
     border-color: #fff;
 }
+.add-event:hover,
 .manage-list:hover,
+/* .clear-btn:hover, */
+.help-btn:hover,
 .filter-btn.show:hover,
 .sort-btn.show:hover,
 .search-bar .search-btn:hover{
@@ -703,6 +738,35 @@ body{
     opacity: 1;
     transform: translateY(-60px);
     pointer-events: auto;
+}
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998; 
+}
+.help-wrapper{
+    position: absolute;
+    left: 20%;
+    bottom: 20%;
+    width: 60%;
+    height: 60%;
+    background-color: #fff;
+    color: var(--primary-clr);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+.help-content{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 @media screen and (max-width: 1000px) {
     body {

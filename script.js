@@ -10,11 +10,18 @@ const calendar = document.querySelector(".calendar"),
     eventDate = document.querySelector(".event-date"),
     eventsContainer = document.querySelector(".events"),
     addEventSubmit = document.querySelector(".add-event-btn"),
-    manageList = document.querySelector(".manage-list"),
+    manageBtn = document.querySelector(".manage-list"),
+    // clearBtn = document.querySelector(".clear-btn"),
     filterBtn = document.querySelector(".filter-btn"),
     sortBtn = document.querySelector(".sort-btn"),
+    searchBtn = document.querySelector(".search-btn"),
+    searchText = document.querySelector(".search-text"),
     searchBar = document.querySelector(".search-bar"),
     filterContainer = document.querySelector(".filter-event-wrapper"),
+    filterMonth = document.querySelector(".filter-month"),
+    filterYear = document.querySelector(".filter-year"),
+    filterDo = document.querySelector(".filter-do"),
+    filterAll = document.querySelector(".filter-all"),
     sortContainer = document.querySelector(".sort-event-wrapper"),
     ascendingBtn = document.querySelector(".ascending-btn"),
     descendingBtn = document.querySelector(".descending-btn");
@@ -73,6 +80,8 @@ const months = [
 // ];
 
 let eventsArr = [];
+let eventsMap = new Map();
+let eventsManaged = [];
 getEvents();
 
 function initCalendar() {
@@ -93,20 +102,24 @@ function initCalendar() {
     }
     for (let i = 1; i <= lastDate; i++){
         // check if event
-        let event = false;
-        eventsArr.forEach((eventObj) => {
-            if(eventObj.day === i &&
-            eventObj.month === month + 1 &&
-            eventObj.year === year){
-                event = true;
-            }
-        });        
+        // let event = false;
+        // eventsArr.forEach((eventObj) => {
+        //     if(eventObj.day === i &&
+        //     eventObj.month === month + 1 &&
+        //     eventObj.year === year){
+        //         event = true;
+        //     }
+        // }); 
+        
+        let event = eventsMap.has(`${i}-${month + 1}-${year}`);
         
         if(i === new Date().getDate() && 
         year === new Date().getFullYear() && 
         month === new Date().getMonth()){
-            activeDay = i;
-            getActiveDay(i);
+            if(!manageBtn.classList.contains("active")){
+                activeDay = i;
+                getActiveDay(i);
+            }
             updateEvents(i);
             if(event){
                 days += `<div class="day today active event">${i}</div>`;
@@ -196,12 +209,13 @@ const addEventBtn = document.querySelector(".add-event"),
     addEventTo = document.querySelector(".event-time-to");
     
 
-manageList.addEventListener("click", () => {
+manageBtn.addEventListener("click", () => {
     filterBtn.classList.toggle("show");
-    manageList.classList.toggle("active");
+    manageBtn.classList.toggle("active");
     sortBtn.classList.toggle("show");
     searchBar.classList.toggle("show");
-    addEventBtn.classList.toggle("active");
+    // clearBtn.classList.toggle("show");
+    addEventBtn.classList.toggle("show");
 });
 
 filterBtn.addEventListener("click", () => {
@@ -212,9 +226,10 @@ filterBtn.addEventListener("click", () => {
 sortBtn.addEventListener("click", () => {
     sortContainer.classList.toggle("active");
     sortBtn.classList.toggle("active");
-})
+});
 
 addEventBtn.addEventListener("click", () => {
+    addEventBtn.classList.toggle("active");
     addEventContainer.classList.toggle("active");
 });
 addEventCloseBtn.addEventListener("click", () => {
@@ -224,6 +239,7 @@ addEventCloseBtn.addEventListener("click", () => {
 document.addEventListener("click", (e) => {
     if(e.target !== addEventBtn && !addEventContainer.contains(e.target)){
         addEventContainer.classList.remove("active");
+        addEventBtn.classList.remove("active");
     }
     if(e.target !== sortBtn && !sortContainer.contains(e.target)){
         sortContainer.classList.remove("active");
@@ -258,6 +274,12 @@ addEventTo.addEventListener("input", (e) => {
     }
 });
 
+filterMonth.addEventListener("input", (e) => {
+    filterMonth.value = filterMonth.value.replace(/[^0-9:]/g, "");
+});
+filterYear.addEventListener("input", (e) => {
+    filterYear.value = filterYear.value.replace(/[^0-9:]/g, "");
+});
 // Implement listener on days
 
 function addListener(){
@@ -265,7 +287,7 @@ function addListener(){
     days.forEach((day) => {
         day.addEventListener("click", (e) => {
             activeDay = Number(e.target.innerHTML);
-            getActiveDay(e.target.innerHTML);
+            getActiveDay(e.target.innerHTML); 
             updateEvents(Number(e.target.innerHTML));
             days.forEach((day) => {
                 day.classList.remove("active");
@@ -321,33 +343,78 @@ function getActiveDay(date) {
 
 // Function to show event of active day
 function updateEvents(date){
-    let events = "";
-    eventsArr.forEach((event) => {
-        if(date === event.day &&
-        month + 1 === event.month &&
-        year === event.year
-        ){
-            event.events.forEach((event) => {
-                events += `<div class="event">
+
+    // let events = "";
+    // eventsArr.forEach((event) => {
+    //     if (
+    //     date === event.day &&
+    //     month + 1 === event.month &&
+    //     year === event.year
+    //     ) {
+    //     event.events.forEach((event) => {
+    //         events += `<div class="event">
+    //             <div class="title">
+    //             <i class="fas fa-circle"></i>
+    //             <h3 class="event-title">${event.title}</h3>
+    //             </div>
+    //             <div class="event-time">
+    //             <span class="event-time">${event.time}</span>
+    //             </div>
+    //         </div>`;
+    //     });
+    //     }
+    // });
+
+    // let events = "";
+
+    // for (let i = 0; i < eventsArr.length; i++){
+    //     const eventTarget = eventsArr[i];
+    //     if(date === eventTarget.day &&
+    //         month + 1 === eventTarget.month &&
+    //         year === eventTarget.year
+    //     ){
+    //         const eventList = eventTarget.events;
+    //         for(let j = 0; j < eventList.length; j ++){
+    //             const event = eventList[j];
+    //             events += `<div class="event">
+    //             <div class="title">
+    //               <i class="fas fa-circle"></i>
+    //               <h3 class="event-title">${event.title}</h3>
+    //             </div>
+    //             <div class="event-time">
+    //               <span class="event-time">${event.time}</span>
+    //             </div>
+    //         </div>`;
+    //         }
+    //     }
+    // }
+
+    let eventsHTML = '';
+    if(!manageBtn.classList.contains("active")){
+        const key = `${date}-${month + 1}-${year}`;
+        const eventList = eventsMap.get(key) || [];
+        
+        for (const event of eventList) {
+            eventsHTML += `<div class="event">
                 <div class="title">
-                  <i class="fas fa-circle"></i>
-                  <h3 class="event-title">${event.title}</h3>
+                    <i class="fas fa-circle"></i>
+                    <h3 class="event-title">${event.title}</h3>
                 </div>
                 <div class="event-time">
-                  <span class="event-time">${event.time}</span>
+                    <span class="event-time">${event.time}</span>
                 </div>
             </div>`;
-            });
         }
-    });
 
-    if((events === "")){
-        events = `<div class="no-event">
-                    <h3>No Events</h3>
-                </div>`;
+        if((eventsHTML === "")){
+            eventsHTML = `<div class="no-event">
+                        <h3>No Events</h3>
+                    </div>`;
+        }
+
+        eventsContainer.innerHTML = eventsHTML;
     }
 
-    eventsContainer.innerHTML = events;
     saveEvents();
 }
 
@@ -426,26 +493,51 @@ function convertTime(time) {
 
 eventsContainer.addEventListener("click", (e) => {
     if(e.target.classList.contains("event")){
-        const eventTile = e.target.children[0].children[1].innerHTML;
-
-        eventsArr.forEach((event) => {
-            if(event.day === activeDay &&
-            event.month === month + 1 &&
-            event.year === year){
-                event.events.forEach((item, index) => {
-                    if(item.title === eventTile){
-                        event.events.splice(index, 1);
+        const eventTitle = e.target.querySelector(".event-title").innerText;
+        const eventTime = e.target.querySelector(".event-time").innerText;
+        
+        eventsArr.forEach((eventObj) => {
+            if(!manageBtn.classList.contains("active")){
+                if(eventObj.day === activeDay &&
+                    eventObj.month === month + 1 &&
+                    eventObj.year === year){
+                        eventObj.events.forEach((item, index) => {
+                            if(item.title === eventTitle){
+                                eventObj.events.splice(index, 1);
+                            }
+                        });
+        
+                        if(eventObj.events.length === 0){
+                            eventsArr.splice(eventsArr.indexOf(eventObj), 1);
+        
+                            const activeDayElem = document.querySelector(".day.active");
+                            if(activeDayElem.classList.contains("event")){
+                                activeDayElem.classList.remove("event");
+                            }
+                        }
+                    }
+            } else {
+                eventObj.events.forEach((event) => {
+                    if(event.title === eventTitle && event.time === eventTime){
+                        activeDay = eventObj.day;
+                        month = eventObj.month - 1;
+                        year = eventObj.year;
+                        getActiveDay(activeDay);
+                        initCalendar();
+                        const days = document.querySelectorAll(".day");
+                        days.forEach((day) => {
+                            day.classList.remove("active");
+                        });
+                        days.forEach((day) => {
+                            if(parseInt(day.innerText) === activeDay &&
+                                day.classList.contains("event")
+                            ){
+                                day.classList.add("active");
+                            }
+                        });
+                        return;
                     }
                 });
-
-                if(event.events.length === 0){
-                    eventsArr.splice(eventsArr.indexOf(event), 1);
-
-                    const activeDayElem = document.querySelector(".day.active");
-                    if(activeDayElem.classList.contains("event")){
-                        activeDayElem.classList.remove("event");
-                    }
-                }
             }
         });
         updateEvents(activeDay);
@@ -485,10 +577,85 @@ function merge(left, right) {
     return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
 }
 
-ascendingBtn.addEventListener("click", () => {
-    eventsArr = mergeSort(eventsArr); // Sort in ascending order
-    let events = "";
+filterDo.addEventListener("click", () => {
+    const monthInput = parseInt(filterMonth.value);
+    const yearInput = parseInt(filterYear.value);
+
+    if (filterMonth.value === "" && filterYear.value === "") {
+        alert("Please fill at least month or year");
+        return;
+    }
+    if (monthInput > 12 || monthInput < 1) {
+        alert("Invalid Input Format");
+        return;
+    }
+
+    let eventsHTML = "";
+    eventsManaged = [];
+
     eventsArr.forEach((event) => {
+        if (
+        (monthInput!== "" && monthInput === event.month)||
+        (yearInput!== "" && yearInput === event.year)||
+        (monthInput === event.month && yearInput === event.year)
+        ) {
+            eventsManaged.push(event);
+            event.events.forEach((event) => {
+                eventsHTML += `<div class="event">
+                    <div class="title">
+                    <i class="fas fa-circle"></i>
+                    <h3 class="event-title">${event.title}</h3>
+                    </div>
+                    <div class="event-time">
+                    <span class="event-time">${event.time}</span>
+                    </div>
+                </div>`;
+            });
+        }
+    });
+
+
+    if (eventsHTML === "") {
+        eventsHTML = `<div class="no-event">
+                    <h3>No Events</h3>
+                </div>`;
+    }
+
+    eventsContainer.innerHTML = eventsHTML;
+});
+
+filterAll.addEventListener("click", () => {
+    let eventsHTML = "";
+    eventsManaged = [];
+
+    eventsArr.forEach((event) => {
+        eventsManaged.push(event);
+        event.events.forEach((event) => {
+            eventsHTML += `<div class="event">
+                <div class="title">
+                <i class="fas fa-circle"></i>
+                <h3 class="event-title">${event.title}</h3>
+                </div>
+                <div class="event-time">
+                <span class="event-time">${event.time}</span>
+                </div>
+            </div>`;
+        });        
+    });
+
+    if (eventsHTML === "") {
+        eventsHTML = `<div class="no-event">
+                    <h3>No Events</h3>
+                </div>`;
+    }
+
+    eventsContainer.innerHTML = eventsHTML;
+});
+
+ascendingBtn.addEventListener("click", () => {
+    eventsManaged = mergeSort(eventsManaged); // Sort in ascending order
+    let events = "";
+    eventsManaged.forEach((event) => {
             event.events.forEach((event) => {
                 events += `<div class="event">
                 <div class="title">
@@ -547,9 +714,9 @@ function inverseMerge(left, right) {
 }
 
 descendingBtn.addEventListener("click", () => {
-    eventsArr = inverseMergeSort(eventsArr);
+    eventsManaged = inverseMergeSort(eventsManaged);
     let events = "";
-    eventsArr.forEach((event) => {
+    eventsManaged.forEach((event) => {
             event.events.forEach((event) => {
                 events += `<div class="event">
                 <div class="title">
@@ -568,12 +735,49 @@ descendingBtn.addEventListener("click", () => {
                     <h3>No Events</h3>
                 </div>`;
     }
-
     eventsContainer.innerHTML = events;
+});
+
+searchBtn.addEventListener("click", () => {
+    const searchInput = searchText.value.toLowerCase().trim();
+    
+    if(searchInput === ""){
+        alert("Search bar should not be blank");
+        return;
+    }
+
+    let eventsHTML = "";
+    eventsManaged.forEach((eventObj) => {
+        eventObj.events.forEach((event) => {
+            if(event.title.toLowerCase().includes(searchInput)){
+                eventsHTML += `<div class="event">
+                <div class="title">
+                  <i class="fas fa-circle"></i>
+                  <h3 class="event-title">${event.title}</h3>
+                </div>
+                <div class="event-time">
+                  <span class="event-time">${event.time}</span>
+                </div>
+            </div>`;
+            }
+        });
+    });
+
+    if((eventsHTML === "")){
+        eventsHTML = `<div class="no-event">
+                    <h3>No Events</h3>
+                </div>`;
+    }
+    eventsContainer.innerHTML = eventsHTML;
 });
 
 function saveEvents() {
     localStorage.setItem("events", JSON.stringify(eventsArr));
+    eventsMap.clear();
+    eventsArr.forEach(event => {
+        const dateKey = `${event.day}-${event.month}-${event.year}`;
+        eventsMap.set(dateKey, event.events);
+    });
 }
 
 function getEvents() {
@@ -581,4 +785,8 @@ function getEvents() {
         return;
     }
     eventsArr.push(...JSON.parse(localStorage.getItem("events")));
+    eventsArr.forEach(event => {
+        const dateKey = `${event.day}-${event.month}-${event.year}`;
+        eventsMap.set(dateKey, event.events);
+    });
 }
