@@ -1,5 +1,5 @@
 
-Project Name: Calendar and to-do-list event
+Project Name: Calendar and to-do-list event.
 Developer: Hoàng Thiên Ân - ITCSIU22248
 
 Description:
