@@ -1,3 +1,7 @@
+<!-- Individual project 
+Hoàng Thiên Ân - ITCSIU22248 
+Purpose: Build container, element, button, text, and other element to let them appear on the website -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,66 +17,57 @@
     <div class="overlay"></div>
     <div class="container">
         <div class="help-wrapper">
-            <div class="help-title">How to Use?</div>
-        <div class="help-content">
-            <p>Welcome to my calendar and to-do-list application. Let me guide you through its features:</p>
-            
-            <h3>Calendar (Left Side)</h3>
-            <ul>
-                <li>Displays the month, year, and navigation arrows to move between months.</li>
-                <li>Select a specific day to mark it as active.</li>
-                <li>Active days with events are indicated differently.</li>
-                <li>Clicking on a day with events shows the events in the to-do-list (right side).</li>
-            </ul>
-            
-            <h3>To-Do-List (Right Side)</h3>
-            <ul>
-                <li>Displays the day of the week, date, month, and year for the active day.</li>
-                <li>Lists events for the selected day. If no events, it displays "No events".</li>
-                <li>Buttons at the bottom include "Manage List" and "Add Event".</li>
-                <li>Adding an event requires filling in event details (title, start time, end time).</li>
-                <li>Once submitted, events appear in the list. Clicking an event marks it as done.</li>
-            </ul>
-            
-            <h3>Managing Event Lists</h3>
-            <ul>
-                <li>Clicking "Manage List" shows all events.</li>
-                <li>Options include filtering (by month or year), sorting (ascending or descending), and searching.</li>
-                <li>Sorting or searching applies only after filtering events.</li>
-                <li>Clicking an event navigates the calendar to its date.</li>
-            </ul>
-            
-            <p>Explore the application and enjoy managing your schedule efficiently!</p>
-            <p>Welcome to my calendar and to-do-list application. Let me guide you through its features:</p>
-            
-            <h3>Calendar (Left Side)</h3>
-            <ul>
-                <li>Displays the month, year, and navigation arrows to move between months.</li>
-                <li>Select a specific day to mark it as active.</li>
-                <li>Active days with events are indicated differently.</li>
-                <li>Clicking on a day with events shows the events in the to-do-list (right side).</li>
-            </ul>
-            
-            <h3>To-Do-List (Right Side)</h3>
-            <ul>
-                <li>Displays the day of the week, date, month, and year for the active day.</li>
-                <li>Lists events for the selected day. If no events, it displays "No events".</li>
-                <li>Buttons at the bottom include "Manage List" and "Add Event".</li>
-                <li>Adding an event requires filling in event details (title, start time, end time).</li>
-                <li>Once submitted, events appear in the list. Clicking an event marks it as done.</li>
-            </ul>
-            
-            <h3>Managing Event Lists</h3>
-            <ul>
-                <li>Clicking "Manage List" shows all events.</li>
-                <li>Options include filtering (by month or year), sorting (ascending or descending), and searching.</li>
-                <li>Sorting or searching applies only after filtering events.</li>
-                <li>Clicking an event navigates the calendar to its date.</li>
-            </ul>
-            
-            <p>Explore the application and enjoy managing your schedule efficiently!</p>
-
-        </div>
+            <div class="help-content">
+                <div class="help-title">How to Use?                             
+                    <i class='bx bxs-help-circle'></i>
+                </div>
+                <p>Welcome to my calendar and to-do-list application. Let me guide you through its features:</p>
+                
+                <h3>Calendar (Left Side)</h3>
+                <ul>
+                    <li>Displays the month, year, and navigation arrows to move between months.</li>
+                    <img src="images/image1.png" class="image1">
+                    <li>Select a specific day to mark it as active.</li>
+                    <img src="images/image2.png" class="image2">
+                    <li>Days with events are indicated differently.</li>
+                    <img src="images/image3.png" class="image3">
+                    <li>Clicking on a day with events shows the events in the to-do-list (right side)</li>
+                    <img src="images/image4.png" class="image4">
+                    <li>Input month and year at here would move the calendar to that time.</li>
+                    <img src="images/image5.png" class="image5">
+                    <li>Press Today button to jump current date on calendar to present date</li>
+                    <img src="images/image6.png" class="image6">
+                </ul>
+                
+                <h3>To-Do-List (Right Side)</h3>
+                <ul>
+                    <li>Displays the day of the week, date, month, and year for the active day.</li>
+                    <li>Lists events for the selected day. If no events, it displays "No events".</li>
+                    <img src="images/image7.png" class="image7">
+                    <li>Adding an event requires filling in event details (title, start time, end time).</li>
+                    <img src="images/image8.png" class="image8">
+                    <li>Once submitted, events appear in the list. Clicking an event marks it as done.</li>
+                </ul>
+                
+                <h3>Managing Event Lists</h3>
+                <ul>
+                    <li>Clicking "Manage List" shows all other button feature.</li>
+                    <img src="images/image9.png" class="image9">
+                    <li>Filtering (by month or year)</li>
+                    <img src="images/image10.png" class="image10">
+                    <li>Sorting (ascending or descending)</li>    
+                    <img src="images/image11.png" class="image11">
+                    <li>Searching</li>
+                    <img src="images/image13.png" class="image13">
+                    <li>Sorting or searching applies only after filtering events.</li>
+                    <li>Clicking an event in manage form navigates the calendar to its date.</li>
+                    <img src="images/image12.png" class="image12">
+                    <li class="caution">Note: You have to use filter button before use searching or sorting.
+                        Searching and sorting do not work together
+                        they will only return the event list base on the filter function 
+                    </li>   
+                </ul>                
+            </div>
         </div>
         <div class ="left">
             <div class="calendar">
@@ -97,7 +92,7 @@
                         <input type="text" placeholder="mm/yyyy" class="date-input" />
                         <button class="goto-btn">go</button>
                     </div>
-                    <button class="today-btn">today</button>
+                    <button class="today-btn">Today</button>
                 </div>
             </div>
         </div>
