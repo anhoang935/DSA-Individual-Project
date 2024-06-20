@@ -672,9 +672,8 @@ filterDo.addEventListener("click", () => {
 
     eventsArr.forEach((event) => {
         if (
-        (monthInput!== "" && monthInput === event.month)||
-        (yearInput!== "" && yearInput === event.year)||
-        (monthInput === event.month && yearInput === event.year)
+            (monthInput === "" || monthInput === event.month) &&
+            (yearInput === "" || yearInput === event.year)
         ) {
             eventsManaged.push(event);
             event.events.forEach((event) => {
