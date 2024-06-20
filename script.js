@@ -75,7 +75,7 @@ let eventsManaged = [];
 //     year: 2024,
 //     events: [
 //       {
-//         title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
+//         title: "Event 1",
 //         time: "10:00 AM",
 //       },
 //       {
@@ -90,7 +90,7 @@ let eventsManaged = [];
 //     year: 2024,
 //     events: [
 //       {
-//         title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
+//         title: "Event 1",
 //         time: "10:00 AM",
 //       },
 //       {
@@ -671,10 +671,12 @@ filterDo.addEventListener("click", () => {
     eventsManaged = [];
 
     eventsArr.forEach((event) => {
-        if (
-            (monthInput === "" || monthInput === event.month) &&
-            (yearInput === "" || yearInput === event.year)
-        ) {
+        const matchesFilter =
+        (filterMonth.value === "" && yearInput === event.year) ||
+        (filterYear.value === "" && monthInput === event.month) ||
+        (filterYear.value!== "" && filterMonth.value!== "" && yearInput === event.year && monthInput === event.month);
+  
+        if (matchesFilter) {
             eventsManaged.push(event);
             event.events.forEach((event) => {
                 eventsHTML += `<div class="event">
