@@ -23,3 +23,8 @@ Functionality:
 Dependencies:
 This project uses HTML, CSS, and JavaScript. Ensure your browser supports these technologies for optimal performance.
 
+Presentation Video:
+- Google drive: https://drive.google.com/file/d/1OOP5u9anMUZ3xOe0kB5YgRppsVISSQlW/view?usp=sharing
+- Youtube: https://www.youtube.com/watch?v=ey7c4pru3oo
+
+
